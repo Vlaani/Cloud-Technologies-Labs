@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  database:
+    image: mongo:noble
+    container_name: ra_database
+    restart: always
+    volumes:
+      - ra_db:/data/db
+    networks: 
+      - backend
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s    
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  server:
+    build: ./server.js
+    container_name: ra_server
+    depends_on:
+      - database
+    networks: 
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl -f http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  nginx:
+    build: ./nginx
+    container_name: ra_nginx
+    depends_on:
+      - server
+    ports:
+      - "8080:80"
+      - "8000:443"
+    networks: 
+      - frontend
+
+volumes:
+  ra_db:
+    external: true
+
+networks:
+  frontend:
+      driver: bridge
+  backend:
+      driver: bridge

@@ -1,0 +1,5 @@
+catboost
+scikit-learn
+seaborn
+jupyterlab
+notebook
