@@ -36,8 +36,10 @@ _Делаем запрос к nginx и получаем ответ от серв
 Вот результаты:
 Попробуем из nginx сделать запрос:
 1. На сервер  
-![net_f](./assets/net_f.png)  
+![net_f](./assets/net_f.png)
+_Пакеты дошли_
 ![recieved](./assets/recieved.png)  
-2. В базу данных  
-![net_b](./assets/net_b.png)  
+3. В базу данных  
+![net_b](./assets/net_b.png)
+_Пакеты потерялись_
 ![lost](./assets/lost.png)  
