@@ -35,9 +35,9 @@ _Делаем запрос к nginx и получаем ответ от серв
 Создадим две сети: frontend и backend. Таким образом контейнеры в одной сети не будут "видеть" контейнеры в другой сети.
 Вот результаты:
 Попробуем из nginx сделать запрос:
-1. На сервер
-![net_f](./assets/net_f.png)
-![recieved](./assets/recieved.png)
-2. В базу данных
-![net_b](./assets/net_b.png)
-![lost](./assets/lost.png)
+1. На сервер  
+![net_f](./assets/net_f.png)  
+![recieved](./assets/recieved.png)  
+2. В базу данных  
+![net_b](./assets/net_b.png)  
+![lost](./assets/lost.png)  
