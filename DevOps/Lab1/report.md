@@ -40,7 +40,7 @@ sudo ln -s /etc/nginx/sites-available/testsite2.local.conf /etc/nginx/site-enabl
 sudo openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
 ```
 [//]:(![ssl_keygen](./assets/ssl_keygen.png))
-И добавим их в конфиг
+И добавим их в конфиг  
 ![add_ssl](./assets/add_ssl.png)  
 Firerox ругается на самоподписной ключ:  
 ![self_signed_ssl](./assets/self_signed_ssl.png)  
