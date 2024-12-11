@@ -29,15 +29,17 @@ ports:
 Добавим healthcheck. Он будет проверять доступность нашего контейнера, который будет считаться работоспособным, healthcheck завершится успешно.
 #### 3. Используем тэг noble
 используем "noble" версию mongodb вместо latest.
-![result](./assets/result.png)
+![result](./assets/result.png)  
 _Делаем запрос к nginx и получаем ответ от сервера_
 ## Изоляция контейнеров
 Создадим две сети: frontend и backend. Таким образом контейнеры в одной сети не будут "видеть" контейнеры в другой сети.
 Вот результаты:
 Попробуем из nginx сделать запрос:
-1. На сервер
-![net_f](./assets/net_f.png)
-![recieved](./assets/recieved.png)
-2. В базу данных
-![net_b](./assets/net_b.png)
-![lost](./assets/lost.png)
+1. На сервер  
+![net_f](./assets/net_f.png)  
+_Пакеты дошли_  
+![recieved](./assets/recieved.png)  
+3. В базу данных  
+![net_b](./assets/net_b.png)  
+_Пакеты потерялись_  
+![lost](./assets/lost.png)  
