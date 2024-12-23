@@ -6,6 +6,7 @@ on:
         - main
         paths:
         - DevOps/Lab3
+        - .github/workflows/goodPractice.yml
 jobs:
   Built:
     runs-on: ubuntu-22.04
