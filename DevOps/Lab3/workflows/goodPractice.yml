@@ -10,6 +10,7 @@ on:
 jobs:
   built:
     runs-on: ubuntu-22.04
+
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -24,21 +25,25 @@ jobs:
   
       - name: Build
         run: dotnet build ./DevOps/Lab3/TestApp --no-restore
+      
+      - name: Test
+        run: dotnet test ./DevOps/Lab3/TestApp --no-build --verbosity normal
   
-  tests:
-    runs-on: ubuntu-22.04
+  deploy:
     needs: built
+    runs-on: ubuntu-22.04
+
     steps:
       - name: checkout
         uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
         with:
-          dotnet-version: 8.0.x
-  
-      - name: Restore dependencies
-        run: dotnet restore ./DevOps/Lab3/TestApp
+          name: built-application
 
-      - name: Test
-        run: dotnet test ./DevOps/Lab3/TestApp --no-build --verbosity normal
+      - name: Deploy application
+        run: |
+          echo "Application deployed"
+        
+      
