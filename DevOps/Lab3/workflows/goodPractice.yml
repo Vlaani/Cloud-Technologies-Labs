@@ -8,7 +8,7 @@ on:
         - DevOps/Lab3
         - .github/workflows/goodPractice.yml
 jobs:
-  Built:
+  built:
     runs-on: ubuntu-22.04
     steps:
       - name: checkout
@@ -25,10 +25,20 @@ jobs:
       - name: Build
         run: dotnet build ./DevOps/Lab3/TestApp --no-restore
   
-  Tests:
+  tests:
     runs-on: ubuntu-22.04
-    needs: Built
+    needs: built
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 8.0.x
+  
+      - name: Restore dependencies
+        run: dotnet restore ./DevOps/Lab3/TestApp
+
       - name: Test
         run: dotnet test ./DevOps/Lab3/TestApp --no-build --verbosity normal
