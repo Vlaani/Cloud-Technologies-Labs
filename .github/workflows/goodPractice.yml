@@ -55,9 +55,9 @@ jobs:
           name: code
 
       - name: Download build artifacts
-          uses: actions/download-artifact@v3
-          with:
-            name: tests
+        uses: actions/download-artifact@v3
+        with:
+          name: tests
 
       - name: Deploy application
         run: |
