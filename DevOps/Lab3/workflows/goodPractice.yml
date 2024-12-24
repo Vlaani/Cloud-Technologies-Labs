@@ -31,11 +31,12 @@ jobs:
         with:
           name: code
           path: ./DevOps/Lab3/TestApp/Code/bin
+    
       - name: Upload Tests Artifacts
-          uses: actions/upload-artifact@v4
-          with:
-            name: tests
-            path: ./DevOps/Lab3/TestApp/Tests/bin
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests
+          path: ./DevOps/Lab3/TestApp/Tests/bin
 
       - name: Test
         run: dotnet test ./DevOps/Lab3/TestApp --no-build --verbosity normal
@@ -52,7 +53,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: code
-          
+
       - name: Download build artifacts
           uses: actions/download-artifact@v3
           with:
