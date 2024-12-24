@@ -1,0 +1,64 @@
+name: C# Application
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+    push:
+        branches:
+        - main
+        paths:
+        - DevOps/Lab3
+        - .github/workflows/goodPractice.yml
+jobs:
+  built:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+          
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 8.0.x
+  
+      - name: Restore dependencies
+        run: dotnet restore ./DevOps/Lab3/TestApp
+  
+      - name: Build
+        run: dotnet build ./DevOps/Lab3/TestApp --no-restore
+      
+      - name: Upload Code Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: code
+          path: ./DevOps/Lab3/TestApp/Code/bin
+    
+      - name: Upload Tests Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests
+          path: ./DevOps/Lab3/TestApp/Tests/bin
+
+      - name: Test
+        run: dotnet test ./DevOps/Lab3/TestApp --no-build --verbosity normal
+  
+  deploy:
+    needs: built
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: code
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: tests
+
+      - name: Deploy application
+        run: |
+          echo "Application deployed"

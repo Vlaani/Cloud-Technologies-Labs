@@ -7,60 +7,76 @@ on:
         paths:
         - DevOps/Lab3
         - .github/workflows/goodPractice.yml
+
+env:
+  App_Path: ./DevOps/Lab3/TestApp
+
 jobs:
-  built:
+  build:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v4
-          
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
-  
-      - name: Restore dependencies
-        run: dotnet restore ./DevOps/Lab3/TestApp
-  
-      - name: Build
-        run: dotnet build ./DevOps/Lab3/TestApp --no-restore
-      
-      - name: Upload Code Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: code
-          path: ./DevOps/Lab3/TestApp/Code/bin
-    
-      - name: Upload Tests Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: tests
-          path: ./DevOps/Lab3/TestApp/Tests/bin
 
-      - name: Test
-        run: dotnet test ./DevOps/Lab3/TestApp --no-build --verbosity normal
-  
-  deploy:
-    needs: built
+      - name: Restore dependencies
+        run: dotnet restore $App_Path
+
+      - name: Build project
+        run: dotnet build $App_Path --configuration Release
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: $App_Path/**/bin/Release/net8.0/*
+
+  test:
     runs-on: ubuntu-22.04
+    needs: build
+    if: success()
 
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
         with:
-          name: code
+          dotnet-version: 8.0.x
 
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: tests
+          name: build-output
+
+      - name: Run tests
+        run: dotnet test $App_Path --configuration Release
+
+  deploy:
+    runs-on: ubuntu-22.04
+    needs: test
+    if: success()
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
 
       - name: Deploy application
         run: |
           echo "Application deployed"
-        
-      
