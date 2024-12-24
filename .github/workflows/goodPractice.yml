@@ -10,7 +10,9 @@ on:
 
 env:
   App_Path: ./DevOps/Lab3/TestApp
-
+env:
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  
 jobs:
   build:
     runs-on: ubuntu-22.04
