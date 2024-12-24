@@ -33,7 +33,7 @@ jobs:
           name: build-output
           path: | 
             ${{ env.App_Path }}/**/bin/Release/net8.0/
-            ${{ env.App_Path }}/**/obj/Release/net8.0/
+            ${{ env.App_Path }}/**/obj/*.json
 
   test:
     runs-on: ubuntu-22.04
