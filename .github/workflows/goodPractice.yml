@@ -23,7 +23,7 @@ jobs:
           cache: true
 
       - name: Restore dependencies
-        run: dotnet restore $App_Path --locked-mode
+        run: dotnet restore $App_Path
 
       - name: Build project
         run: dotnet build $App_Path --no-restore --configuration Release
