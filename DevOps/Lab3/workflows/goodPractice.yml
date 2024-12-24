@@ -21,9 +21,7 @@ jobs:
         with:
           dotnet-version: 8.0.x
           cache: true
-
-      - name: Restore dependencies
-        run: dotnet restore $App_Path
+      - run: dotnet restore $App_Path --locked-mode
 
       - name: Build project
         run: dotnet build $App_Path --no-restore --configuration Release
