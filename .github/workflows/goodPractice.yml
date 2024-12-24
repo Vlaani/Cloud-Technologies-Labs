@@ -5,7 +5,7 @@ on:
         branches:
         - main
         paths:
-        - DevOps/Lab3/
+        - DevOps/Lab3/**
         - .github/workflows/goodPractice.yml
 
 env:
