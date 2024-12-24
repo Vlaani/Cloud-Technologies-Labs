@@ -31,9 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: | 
-            ${{ env.App_Path }}/**/bin/Release/net8.0/
-            ${{ env.App_Path }}/**/obj/*.json
+          path: ${{ env.App_Path }}/**/bin/Release/net8.0/
 
   test:
     runs-on: ubuntu-22.04
@@ -48,14 +46,10 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build-output
+          cache: true
 
       - name: Run tests
-        run: dotnet test $App_Path --no-restore --configuration Release
+        run: dotnet test $App_Path --configuration Release
 
   deploy:
     runs-on: ubuntu-22.04
@@ -70,6 +64,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
+          cache: true
 
       - name: Download build artifacts
         uses: actions/download-artifact@v3
