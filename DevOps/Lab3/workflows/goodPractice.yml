@@ -31,7 +31,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: ${{ env.App_Path }}/**/bin/Release/net8.0/
+          path: | 
+            ${{ env.App_Path }}/**/bin/Release/net8.0/
+            ${{ env.App_Path }}/**/obj/Release/net8.0/
 
   test:
     runs-on: ubuntu-22.04
