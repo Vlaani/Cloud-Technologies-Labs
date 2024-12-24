@@ -71,7 +71,8 @@ jobs:
         with:
           access_token: ${{ secrets.BITWARDEN_ACCESS_TOKEN }}
           base_url: https://vault.bitwarden.com
-          secrets: e8415d37-476d-42f4-bf16-b25000fca9bc > my_secret
+          secrets: |
+            e8415d37-476d-42f4-bf16-b25000fca9bc > my_secret
 
       - name: Download build artifacts
         uses: actions/download-artifact@v3
