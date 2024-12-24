@@ -26,6 +26,17 @@ jobs:
       - name: Build
         run: dotnet build ./DevOps/Lab3/TestApp --no-restore
       
+      - name: Upload Code Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: code
+          path: ./DevOps/Lab3/TestApp/Code/bin
+      - name: Upload Tests Artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: tests
+            path: ./DevOps/Lab3/TestApp/Tests/bin
+
       - name: Test
         run: dotnet test ./DevOps/Lab3/TestApp --no-build --verbosity normal
   
@@ -40,7 +51,12 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: built-application
+          name: code
+          
+      - name: Download build artifacts
+          uses: actions/download-artifact@v3
+          with:
+            name: tests
 
       - name: Deploy application
         run: |
