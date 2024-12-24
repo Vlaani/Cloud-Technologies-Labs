@@ -56,7 +56,7 @@ jobs:
           name: build-output
 
       - name: Run tests
-        run: dotnet test $App_Path --no-restore --no-build --configuration Release
+        run: dotnet test $App_Path --no-build --configuration Release
 
   deploy:
     runs-on: ubuntu-22.04
